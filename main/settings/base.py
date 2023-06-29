@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Modules
     'rest_framework',
     'rest_framework.authtoken',
+    'dj_rest_auth',
     'drf_yasg',
     # Apps
     'blog',
