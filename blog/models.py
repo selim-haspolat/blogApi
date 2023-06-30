@@ -22,6 +22,15 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.user} {self.post}'
 
+
+# ---------- LikeModel ----------
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey('Blog', on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f'{self.user} {self.post}'
+
 # ---------- BlogModel ----------
 class Blog(models.Model):
 
@@ -37,7 +46,6 @@ class Blog(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, max_length=1, default='p')
-    # comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
         return self.title

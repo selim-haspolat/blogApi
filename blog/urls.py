@@ -2,8 +2,8 @@ from django.urls import path
 from .views import (
     BlogViewSet,
     CommentViewSet,
+    LikeCreate,
 )
-
 
 urlpatterns = [
 ]
@@ -18,6 +18,6 @@ router = DefaultRouter()
 
 router.register('blogs', BlogViewSet)
 router.register('comments', CommentViewSet)
-# router.register('', UserViewSet)
+router.register('like', LikeCreate)
 
 urlpatterns += router.urls
