@@ -15,6 +15,10 @@ class CreateUserViewSet(CreateModelMixin, GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.fields['password'].required = True  # Password should be required for registration 
         serializer.is_valid(raise_exception=True)
+        # Default values
+        serializer.validated_data['is_superuser'] = False
+        serializer.validated_data['is_staff'] = False
+        serializer.validated_data['is_active'] = True
         # <--- User.save() & Token.create() --->
         user = serializer.save()
         token = Token.objects.create(user=user)
