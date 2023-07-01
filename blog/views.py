@@ -1,7 +1,8 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from .permissions import IsAdminOrReadOnly
-from rest_framework.mixins import CreateModelMixin
 from .serializers import (
     Comment, CommentSerializer,
     Blog, BlogSerializer,
@@ -9,13 +10,32 @@ from .serializers import (
     Category, CategorySerializer,
     PostView,
 )
-from django.contrib.auth.models import User
 
-class CommentViewSet(ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
 
-    permission_classes = [IsAuthenticatedOrReadOnly]
+class CommentView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        from rest_framework.response import Response
+        from rest_framework import status
+
+        request.data['post'] = self.kwargs.get('pk')
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request, *args, **kwargs):
+        from rest_framework.response import Response
+        from rest_framework import status
+
+        comments = Comment.objects.filter(post=self.kwargs.get('pk'))
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 
 class BlogViewSet(ModelViewSet):
     queryset = Blog.objects.all()

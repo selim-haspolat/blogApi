@@ -14,7 +14,7 @@ class Category(models.Model):
 
 # ---------- CommentModel ----------
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post = models.ForeignKey('Blog', on_delete=models.CASCADE)
     time_stamp = models.DateTimeField(auto_now_add=True)
     content = models.TextField()

@@ -10,7 +10,7 @@ from .models import (
 
 class CommentSerializer(serializers.ModelSerializer):
 
-    user = serializers.StringRelatedField()
+    # user = serializers.StringRelatedField()
 
     class Meta:
         model = Comment
