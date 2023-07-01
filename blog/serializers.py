@@ -31,8 +31,8 @@ class LikeSerializer(serializers.ModelSerializer):
 
 class BlogSerializer(serializers.ModelSerializer):
 
-    author = serializers.StringRelatedField()
-    category = serializers.StringRelatedField()
+    # author = serializers.StringRelatedField()
+    # category = serializers.StringRelatedField()
 
     comments = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()

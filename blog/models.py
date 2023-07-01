@@ -44,8 +44,8 @@ class Blog(models.Model):
     image = models.URLField(max_length=250)
     category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=1)
     publish_date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS, max_length=1, default='p')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    status = models.CharField(choices=STATUS, max_length=1, default='p', null=True)
     #! slug eksik
 
     def __str__(self):
