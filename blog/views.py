@@ -4,6 +4,7 @@ from .serializers import (
     Comment, CommentSerializer,
     Blog, BlogSerializer,
     Like, LikeSerializer,
+    Category, CategorySerializer,
     PostView
 )
 
@@ -17,13 +18,17 @@ class BlogViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         id = kwargs.get(self.lookup_field)
-        print(id)
-        print(request.user.id)
         if not PostView.objects.filter(user=request.user, post= id).exists():
             post_view = PostView(user=request.user, post_id=id)  
             post_view.save()  
 
         return super().retrieve(request, *args, **kwargs)
+
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
 
 class LikeCreate(CreateModelMixin, GenericViewSet):
     queryset = Like.objects.all()

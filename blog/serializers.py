@@ -16,13 +16,18 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         exclude = []
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        exclude = []
 
 class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
         exclude = []
-        
+
 
 class BlogSerializer(serializers.ModelSerializer):
 

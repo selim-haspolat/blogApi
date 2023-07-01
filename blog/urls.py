@@ -3,6 +3,7 @@ from .views import (
     BlogViewSet,
     CommentViewSet,
     LikeCreate,
+    CategoryViewSet,
 )
 
 urlpatterns = [
@@ -12,12 +13,12 @@ urlpatterns = [
 # --------------- Router ---------------
 
 from rest_framework.routers import DefaultRouter
-# from .views import UserViewSet, CreateUserViewSet
 
 router = DefaultRouter()
 
 router.register('blogs', BlogViewSet)
 router.register('comments', CommentViewSet)
-router.register('like', LikeCreate)
+router.register('likes', LikeCreate)
+router.register('categories', CategoryViewSet)
 
 urlpatterns += router.urls
