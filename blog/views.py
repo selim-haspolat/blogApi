@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.mixins import CreateModelMixin
 from .serializers import (
     Comment, CommentSerializer,
@@ -12,9 +13,13 @@ class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
 class BlogViewSet(ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def retrieve(self, request, *args, **kwargs):
         id = kwargs.get(self.lookup_field)
@@ -34,6 +39,8 @@ class LikeCreate(CreateModelMixin, GenericViewSet):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
 
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
     def create(self, request, *args, **kwargs):
         user = request.data.get('user')
         post = request.data.get('post')

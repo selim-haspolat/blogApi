@@ -46,6 +46,7 @@ class Blog(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, max_length=1, default='p')
+    #! slug eksik
 
     def __str__(self):
         return self.title
