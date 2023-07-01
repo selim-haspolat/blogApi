@@ -4,6 +4,7 @@ from .models import (
     Comment,
     Category,
     Like,
+    PostView
 )
 
 
@@ -21,7 +22,7 @@ class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         exclude = []
-
+        
 
 class BlogSerializer(serializers.ModelSerializer):
 
@@ -33,6 +34,8 @@ class BlogSerializer(serializers.ModelSerializer):
 
     likes_n = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
+
+    post_views = serializers.SerializerMethodField()
 
     class Meta:
         model = Blog
@@ -55,3 +58,7 @@ class BlogSerializer(serializers.ModelSerializer):
     def get_likes(self, obj):
         likes = Like.objects.filter(post=obj.id)
         return len(likes)
+    
+    def get_post_views(self, obj):
+        post_views = PostView.objects.filter(post=obj.id)
+        return len(post_views)

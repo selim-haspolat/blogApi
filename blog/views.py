@@ -3,7 +3,8 @@ from rest_framework.mixins import CreateModelMixin
 from .serializers import (
     Comment, CommentSerializer,
     Blog, BlogSerializer,
-    Like, LikeSerializer
+    Like, LikeSerializer,
+    PostView
 )
 
 class CommentViewSet(ModelViewSet):
@@ -13,6 +14,16 @@ class CommentViewSet(ModelViewSet):
 class BlogViewSet(ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        id = kwargs.get(self.lookup_field)
+        print(id)
+        print(request.user.id)
+        if not PostView.objects.filter(user=request.user, post= id).exists():
+            post_view = PostView(user=request.user, post_id=id)  
+            post_view.save()  
+
+        return super().retrieve(request, *args, **kwargs)
 
 class LikeCreate(CreateModelMixin, GenericViewSet):
     queryset = Like.objects.all()

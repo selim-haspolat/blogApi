@@ -42,10 +42,19 @@ class Blog(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
     image = models.URLField(max_length=250)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=1)
     publish_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, max_length=1, default='p')
 
     def __str__(self):
         return self.title
+
+
+# ------- PostViewModel --------
+class PostView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey('Blog', on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f'{self.user} {self.post}'
